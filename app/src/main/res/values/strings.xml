@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">VocabManager</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_sort">Sort</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_search">Search Results</string>
+    <string name="search_hint">Search Vocabulary words</string>
+
+
+    <!-- TODO: Put these in a place that don't get accidentally translated. -->
+    <string name="preference_sort_key">sort_key</string>
+    <string name="preference_dark_mode_on_key">dark_mode_on</string>
+
+
+    <string name="pref_description_theme">Apply a Dark theme to the app. The app may need to be restarted for this setting to take effect.</string>
+    <string name="pref_title_theme">Dark Mode</string>
+</resources>

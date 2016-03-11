@@ -1,0 +1,26 @@
+
+FragmentManager (no support library mention) http://www.survivingwithandroid.com/2013/04/android-fragment-transaction.html
+
+Simple ListAdapter example: http://stackoverflow.com/questions/8166497/custom-adapter-for-list-view
+
+Database Access Object: http://www.tutorialspoint.com/design_pattern/data_access_object_pattern.htm
+
+ListView PopupMenu: http://stackoverflow.com/questions/29771766/how-to-create-an-edit-delete-dialog-when-long-clicking-on-a-listview-item-andro
+
+Settings with action bar: http://stackoverflow.com/questions/26564400/creating-a-preference-screen-with-support-v21-toolbar
+
+Sorting: http://stackoverflow.com/questions/14154127/collections-sortlistt-comparator-super-t-method-example
+
+Two-field Sorting: http://stackoverflow.com/questions/4805606/how-to-sort-by-two-fields-in-java
+
+Determine Object's class: http://stackoverflow.com/questions/541749/how-to-determine-an-objects-class-in-java
+
+EditText in dialog: http://stackoverflow.com/questions/13584063/adding-edittext-to-alert-dialog
+
+AlertDialog builder: http://stackoverflow.com/questions/30018587/alertdialog-setbutton-was-deprecated
+
+Prevent AlertDialog from automatically closing: http://stackoverflow.com/questions/2620444/how-to-prevent-a-dialog-from-closing-when-a-button-is-clicked
+
+Searchable Activity help: http://stackoverflow.com/questions/21044465/searchview-doesnt-start-the-searchableactivity
+
+Fantastic SQLite example: https://github.com/codepath/android_guides/wiki/Local-Databases-with-SQLiteOpenHelper
