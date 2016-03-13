@@ -24,3 +24,12 @@ Prevent AlertDialog from automatically closing: http://stackoverflow.com/questio
 Searchable Activity help: http://stackoverflow.com/questions/21044465/searchview-doesnt-start-the-searchableactivity
 
 Fantastic SQLite example: https://github.com/codepath/android_guides/wiki/Local-Databases-with-SQLiteOpenHelper
+
+Simplest StartActivityForResult example: http://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
+
+Image in EditText: http://stackoverflow.com/questions/6529485/how-to-set-edittext-to-show-search-button-or-enter-button-on-keyboard
+
+Simple remote API access: http://www.androidauthority.com/use-remote-web-api-within-android-app-617869/
+
+Persistent Footer(the second answer): http://stackoverflow.com/questions/2318775/how-to-create-fixed-footer-in-android-layout
+

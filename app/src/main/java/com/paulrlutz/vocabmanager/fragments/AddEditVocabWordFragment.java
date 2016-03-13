@@ -1,9 +1,11 @@
 package com.paulrlutz.vocabmanager.fragments;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +14,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.paulrlutz.vocabmanager.R;
+import com.paulrlutz.vocabmanager.activities.DefinitionLookupActivity;
 import com.paulrlutz.vocabmanager.data.VocabWord;
 import com.paulrlutz.vocabmanager.interfaces.AddEditVocabWordFragmentInterface;
 
@@ -30,6 +34,8 @@ public class AddEditVocabWordFragment extends Fragment {
     Button btnCancel;
     Button btnSave;
 
+    ImageButton btnDefinitionSearch;
+
     EditText editName;
     EditText editDefinition;
     EditText editNotes;
@@ -42,10 +48,11 @@ public class AddEditVocabWordFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_vocab_word, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_edit_vocab_word, container, false);
 
         btnCancel = (Button) view.findViewById(R.id.btnCancel);
         btnSave = (Button) view.findViewById(R.id.btnSave);
+        btnDefinitionSearch  = (ImageButton) view.findViewById(R.id.btnDefinitionSearch);
 
         editName = (EditText) view.findViewById(R.id.editName);
         editDefinition = (EditText) view.findViewById(R.id.editDefinition);
@@ -206,8 +213,39 @@ public class AddEditVocabWordFragment extends Fragment {
                 }
             });
         }
+        if(btnDefinitionSearch != null) {
+            btnDefinitionSearch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(getActivity(), DefinitionLookupActivity.class);
+
+                    String searchWord = editName.getText()+"";
+                    if(searchWord!=null&&searchWord.length()>0) {
+                        intent.putExtra("WORD",searchWord);
+                    }
+
+                    startActivityForResult(intent, 1);
+                }
+            });
+        }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if(resultCode == AppCompatActivity.RESULT_OK){
+                String result=data.getStringExtra("DEFINITION");
+                if(result!=null){
+                    editDefinition.setText(result);
+                }
+            }
+            if (resultCode == AppCompatActivity.RESULT_CANCELED) {
+                Log.d(TAG, "Get def cancelled");
+            }
+        }
+    }
     /**
      * Method to call when Save is clicked.
      *

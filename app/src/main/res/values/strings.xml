@@ -11,9 +11,12 @@
 
     <!-- TODO: Put these in a place that don't get accidentally translated. -->
     <string name="preference_sort_key">sort_key</string>
+
+    <string name="preference_instant_search_on_key">instant_search_on</string>
+    <string name="pref_description_instant_search">Searching for definitions updates as you type. Increases data usage.</string>
+    <string name="pref_title_instant_search">Instant Search</string>
+
     <string name="preference_dark_mode_on_key">dark_mode_on</string>
-
-
     <string name="pref_description_theme">Apply a Dark theme to the app. The app may need to be restarted for this setting to take effect.</string>
     <string name="pref_title_theme">Dark Mode</string>
 </resources>
