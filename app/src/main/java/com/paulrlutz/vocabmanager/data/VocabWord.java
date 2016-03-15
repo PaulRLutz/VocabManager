@@ -1,5 +1,8 @@
 package com.paulrlutz.vocabmanager.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Comparator;
 
 /**
@@ -7,7 +10,7 @@ import java.util.Comparator;
  * Each VocabWord must include: ID, Name, Definition
  * Each VocabWord may contain Category, Example, Notes, CompareWith, Links, and Tags
  */
-public class VocabWord {
+public class VocabWord implements Parcelable{
 
     Integer id;
 
@@ -17,6 +20,9 @@ public class VocabWord {
 
     String notes;
 
+    /**
+     * Constructors
+     */
     public VocabWord(String mName, String mDefinition) {
         this(-1, mName, mDefinition);
     }
@@ -33,6 +39,7 @@ public class VocabWord {
         notes = "";
 
     }
+
 
 
 
@@ -69,6 +76,7 @@ public class VocabWord {
             }
         };
     }
+
 
 
     /**
@@ -134,5 +142,54 @@ public class VocabWord {
         }
         return notes;
     }
+
+
+    /**
+     * Parcelable junk
+     */
+
+
+    protected VocabWord(Parcel in) {
+        this.id = in.readInt();
+
+        this.name = in.readString();
+        this.definition = in.readString();
+        this.category = in.readString();
+
+        this.notes = in.readString();
+    }
+
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+
+        dest.writeString(name);
+        dest.writeString(definition);
+        dest.writeString(category);
+
+        dest.writeString(notes);
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
+    public static final Parcelable.Creator<VocabWord> CREATOR
+            = new Parcelable.Creator<VocabWord>() {
+
+        @Override
+        public VocabWord createFromParcel(Parcel in) {
+            return new VocabWord(in);
+        }
+
+        @Override
+        public VocabWord[] newArray(int size) {
+            return new VocabWord[size];
+        }
+    };
 
 }

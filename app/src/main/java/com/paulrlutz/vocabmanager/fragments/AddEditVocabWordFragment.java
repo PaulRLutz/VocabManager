@@ -42,7 +42,7 @@ public class AddEditVocabWordFragment extends Fragment {
 
     Spinner spinnerCategory;
 
-    VocabWord vocabWord = null; // TODO Editing
+    VocabWord vocabWord = null;
 
 
     @Override

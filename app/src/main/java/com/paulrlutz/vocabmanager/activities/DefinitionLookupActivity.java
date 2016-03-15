@@ -1,7 +1,10 @@
 package com.paulrlutz.vocabmanager.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -40,7 +44,6 @@ import java.util.List;
  * DefinitionLookupActivity uses an AsyncTask to search for definitions of a given word using Pearson dictionary API.
  */
 
-// TODO Add internet connectivity check.
 public class DefinitionLookupActivity extends AppCompatActivity {
 
     private static final String TAG = "DefLookupActivity";
@@ -51,6 +54,7 @@ public class DefinitionLookupActivity extends AppCompatActivity {
 
     SharedPreferences prefs;
 
+    // TODO Searching when the EditText brings up the definition for adagio. Why...?
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         /**
@@ -79,7 +83,7 @@ public class DefinitionLookupActivity extends AppCompatActivity {
         lvDefinitions = (ListView) findViewById(R.id.lvDefinitions);
         editSearchWord = (EditText) findViewById(R.id.editSearchWord);
 
-        // If there is a WORD in the extras, add it to the EditText
+        // If there is a WORD in the extras, add it to editSearchWord
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         String word = null;
@@ -116,10 +120,13 @@ public class DefinitionLookupActivity extends AppCompatActivity {
         editSearchWord.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
 
                 SearchDictionaryAPITask task = new SearchDictionaryAPITask();
                 task.execute(v.getText() + "");
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(editSearchWord.getWindowToken(), 0);
                 return true;
             }
                 return false;
@@ -138,8 +145,9 @@ public class DefinitionLookupActivity extends AppCompatActivity {
 
         int resultCount = jsonObj.getInt("count");
         if(resultCount<1) {
-            Log.e(TAG, "NO RESULTS FOUND"); // TODO Definitely warn user when this happens.
-            //return;
+            setWarning("No results found for: " + editSearchWord.getText());
+            Log.e(TAG, "NO RESULTS FOUND");
+            return;
         }
 
         JSONArray resultsArr = jsonObj.getJSONArray("results");
@@ -160,15 +168,27 @@ public class DefinitionLookupActivity extends AppCompatActivity {
             }
         }
 
+        setListViewContent(definitions);
+
+    }
+
+    private void setWarning(String warning) {
+        final List<String> warningList = new ArrayList<String>();
+        warningList.add(warning);
+
+        setListViewContent(warningList);
+    }
+
+    private void setListViewContent(final List<String> contentList) {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, definitions);
+                android.R.layout.simple_list_item_1, android.R.id.text1, contentList);
         lvDefinitions.setAdapter(adapter);
 
         lvDefinitions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String definition = definitions.get(position);
+                String definition = contentList.get(position);
 
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("DEFINITION",definition);
@@ -176,9 +196,7 @@ public class DefinitionLookupActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
-
 
     // TODO Add proper timeout.
 
@@ -195,7 +213,20 @@ public class DefinitionLookupActivity extends AppCompatActivity {
     class SearchDictionaryAPITask extends AsyncTask<String, Void, String> {
 
         protected void onPreExecute() {
-            progressBar.setVisibility(View.VISIBLE);
+            ConnectivityManager cm =
+                    (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            boolean isConnected = activeNetwork != null &&
+                    activeNetwork.isConnectedOrConnecting();
+
+            if(isConnected) {
+                progressBar.setVisibility(View.VISIBLE);
+            }
+            else {
+                setWarning("No internet connection");
+                cancel(true);
+            }
         }
 
         protected String doInBackground(String... words) {

@@ -3,9 +3,10 @@ package com.paulrlutz.vocabmanager.activities;
 /*
     TODO: Master TODOList
     1. Replace XML text elements with Strings
-    2. Implement definition lookup. Maybe with a little bit of this: http://www.programmableweb.com/api/oxford-english-dictionary
-    3. Add some navigation to the app name in the ActionBar
-    4. Add animations to fragments.
+    2. Add some navigation to the app name in the ActionBar
+    3. Add animations to fragments.
+    4. Add checks in Fragments to ensure Activity implements interfaces. http://developer.android.com/training/basics/fragments/communicating.html
+    5. MainListFragment is probably the only Fragment that should be kept in memory. The others are cheap and should be made with Factories.
  */
 
 import android.app.SearchManager;
@@ -242,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements MainListFragmentI
 
         getFragmentManager().findFragmentById(R.id.currentFragment);
 
-        vocabWordFragment.setVocabWord(word);
+        vocabWordFragment.setVocabWord(word); // TODO Oh god this is terrible, please change this.
 
         //setCurrentFragment(fragment, android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         setCurrentFragment(vocabWordFragment);
@@ -250,13 +251,13 @@ public class MainActivity extends AppCompatActivity implements MainListFragmentI
 
     @Override
     public void createNewVocabWord() {
-        addEditVocabWordFragment.setVocabWord(null); // Let the addEditFragment know that it is creating a VocabWord instead of editing one.
+        addEditVocabWordFragment.setVocabWord(null); // Let the addEditFragment know that it is creating a VocabWord instead of editing one. TODO Terrible.
         setCurrentFragment(addEditVocabWordFragment);
     }
 
     @Override
     public void updateVocabWord(VocabWord vocabWord) {
-        addEditVocabWordFragment.setVocabWord(vocabWord);
+        addEditVocabWordFragment.setVocabWord(vocabWord); //TODO Also change this.
         setCurrentFragment(addEditVocabWordFragment);
     }
 

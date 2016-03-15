@@ -154,7 +154,7 @@ public class MainListFragment extends Fragment {
                                 case R.id.delete:
                                     // TODO add an "Are you sure?" Dialog
                                     VocabWord selectedWord = (VocabWord)mainListView.getAdapter().getItem(selectedPos);
-                                    Log.d(TAG, "DELETE word : " + selectedWord.getName() + " w/ ID: " + selectedWord.getID()); // TODO Add delete
+                                    Log.d(TAG, "DELETE word : " + selectedWord.getName() + " w/ ID: " + selectedWord.getID());
 
                                     ((MainListFragmentInterface) getActivity()).deleteVocabWord(selectedWord);
                                     setArrayAdapter(((MainListFragmentInterface) getActivity()).getVocabWordArrayList());
