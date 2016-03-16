@@ -120,7 +120,7 @@ public class DefinitionLookupActivity extends AppCompatActivity {
         editSearchWord.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            if ((actionId == EditorInfo.IME_ACTION_SEARCH)||(event != null && event.getAction() == KeyEvent.ACTION_DOWN)) {
 
                 SearchDictionaryAPITask task = new SearchDictionaryAPITask();
                 task.execute(v.getText() + "");
