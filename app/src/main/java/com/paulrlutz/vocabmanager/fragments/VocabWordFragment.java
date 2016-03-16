@@ -13,12 +13,23 @@ import com.paulrlutz.vocabmanager.data.VocabWord;
 
 public class VocabWordFragment extends Fragment {
 
+    private static final String VOCAB_WORD_KEY = "VOCAB_WORD";
+
     VocabWord vocabWord = null;
 
     TextView tvName = null;
     TextView tvCategory = null;
     TextView tvDefinition = null;
     TextView tvNotes = null;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle args = getArguments();
+        if (getArguments() != null) {
+            vocabWord = (args.getParcelable(VOCAB_WORD_KEY));
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,15 +46,14 @@ public class VocabWordFragment extends Fragment {
         return view;
     }
 
-    /**
-     * Sets the word to whatever VocabWord should be displayed.
-     */
-    public void setVocabWord(VocabWord word) {
-        vocabWord = word;
-        if(this.isVisible()) {
-            updateViewWithVocabWord(word);
-        }
+    public static VocabWordFragment newInstance(VocabWord word) {
+        VocabWordFragment frag = new VocabWordFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(VOCAB_WORD_KEY, word); // TODO Replace with String
+        frag.setArguments(args);
+        return frag;
     }
+
 
     /**
      * Fills the Views with the data in the given VocabWord.

@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 public class AddEditVocabWordFragment extends Fragment {
 
+    private static final String VOCAB_WORD_KEY = "VOCAB_WORD";
     private static final String TAG = "AddVocabWord Fragment";
 
     Button btnCancel;
@@ -44,6 +45,14 @@ public class AddEditVocabWordFragment extends Fragment {
 
     VocabWord vocabWord = null;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle args = getArguments();
+        if (getArguments() != null) {
+            vocabWord = (args.getParcelable(VOCAB_WORD_KEY));
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,6 +77,15 @@ public class AddEditVocabWordFragment extends Fragment {
         return view;
     }
 
+
+    public static AddEditVocabWordFragment newInstance(VocabWord word) {
+        AddEditVocabWordFragment frag = new AddEditVocabWordFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(VOCAB_WORD_KEY, word); // TODO Replace with String
+        frag.setArguments(args);
+        return frag;
+    }
+
     @Override
     public void onResume() {
         populateFields();
@@ -75,7 +93,7 @@ public class AddEditVocabWordFragment extends Fragment {
     }
 
     /**
-     * Populates the views with the Views with the values of the VocabWord that is to be edited.
+     * Populates the Views with the values of the VocabWord that is to be edited.
      */
     private void populateFields() {
 
@@ -97,17 +115,6 @@ public class AddEditVocabWordFragment extends Fragment {
             if(tempCategory!=null&&spinnerCategory!=null){
                 spinnerCategory.setSelection(categoryNames.indexOf(tempCategory)); // TODO Add some checks to this.
             }
-        }
-    }
-
-    /**
-     * Sets the VocabWord word.
-     * If this is called, then we are editing a VocabWord.
-     */
-    public void setVocabWord(VocabWord word) {
-        vocabWord = word;
-        if(this.isVisible()) { // This is unlikely, but you can never be too safe.
-            populateFields();
         }
     }
 

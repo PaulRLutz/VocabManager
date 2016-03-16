@@ -149,7 +149,7 @@ public class VocabWord implements Parcelable{
      */
 
 
-    protected VocabWord(Parcel in) {
+    public VocabWord(Parcel in) {
         this.id = in.readInt();
 
         this.name = in.readString();

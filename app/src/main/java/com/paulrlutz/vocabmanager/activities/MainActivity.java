@@ -6,7 +6,6 @@ package com.paulrlutz.vocabmanager.activities;
     2. Add some navigation to the app name in the ActionBar
     3. Add animations to fragments.
     4. Add checks in Fragments to ensure Activity implements interfaces. http://developer.android.com/training/basics/fragments/communicating.html
-    5. MainListFragment is probably the only Fragment that should be kept in memory. The others are cheap and should be made with Factories.
  */
 
 import android.app.SearchManager;
@@ -48,8 +47,6 @@ public class MainActivity extends AppCompatActivity implements MainListFragmentI
     FragmentManager fragmentManager;
 
     MainListFragment mainListFragment = null;
-    VocabWordFragment vocabWordFragment = null;
-    AddEditVocabWordFragment addEditVocabWordFragment = null;
 
     VocabWordDatabaseAccessObject vocabWordDAO = null;
 
@@ -84,8 +81,6 @@ public class MainActivity extends AppCompatActivity implements MainListFragmentI
         fragmentManager = getSupportFragmentManager();
 
         mainListFragment = new MainListFragment();
-        vocabWordFragment = new VocabWordFragment();
-        addEditVocabWordFragment = new AddEditVocabWordFragment();
 
         vocabWordDAO = VocabWordDatabaseAccessObject.getInstance(this);
 
@@ -240,25 +235,17 @@ public class MainActivity extends AppCompatActivity implements MainListFragmentI
 
     @Override
     public void showVocabWordInformation(VocabWord word) {
-
-        getFragmentManager().findFragmentById(R.id.currentFragment);
-
-        vocabWordFragment.setVocabWord(word); // TODO Oh god this is terrible, please change this.
-
-        //setCurrentFragment(fragment, android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-        setCurrentFragment(vocabWordFragment);
+        setCurrentFragment(VocabWordFragment.newInstance(word));
     }
 
     @Override
     public void createNewVocabWord() {
-        addEditVocabWordFragment.setVocabWord(null); // Let the addEditFragment know that it is creating a VocabWord instead of editing one. TODO Terrible.
-        setCurrentFragment(addEditVocabWordFragment);
+        setCurrentFragment(AddEditVocabWordFragment.newInstance(null));
     }
 
     @Override
-    public void updateVocabWord(VocabWord vocabWord) {
-        addEditVocabWordFragment.setVocabWord(vocabWord); //TODO Also change this.
-        setCurrentFragment(addEditVocabWordFragment);
+    public void updateVocabWord(VocabWord word) {
+        setCurrentFragment(AddEditVocabWordFragment.newInstance(word));
     }
 
     @Override
