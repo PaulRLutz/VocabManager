@@ -1,0 +1,7 @@
+Replace XML text elements with Strings
+Add some navigation to the app name in the ActionBar
+Add animations to fragments.
+Add checks in Fragments to ensure Activity implements interfaces. http://developer.android.com/training/basics/fragments/communicating.html
+Add floating hint to Category spinner (maybe)
+Add part of speech
+Add multiple category option (tags?)

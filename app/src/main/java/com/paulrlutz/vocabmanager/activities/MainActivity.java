@@ -1,13 +1,5 @@
 package com.paulrlutz.vocabmanager.activities;
 
-/*
-    TODO: Master TODOList
-    1. Replace XML text elements with Strings
-    2. Add some navigation to the app name in the ActionBar
-    3. Add animations to fragments.
-    4. Add checks in Fragments to ensure Activity implements interfaces. http://developer.android.com/training/basics/fragments/communicating.html
- */
-
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
